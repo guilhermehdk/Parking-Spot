@@ -32,22 +32,17 @@ public class ParkingSpotController {
     @PostMapping
     @Transactional
     public ResponseEntity<Object> saveParkingSpot(@RequestBody @Valid ParkingSpotRequest parkingSpotRequest, UriComponentsBuilder uriComponentsBuilder) {
-        if (parkingSpotService.existsByLicensePlateCar(parkingSpotRequest.getLicensePlateCar())) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Licence Plate Car is already in use!");
-        }
-
-        if (parkingSpotService.existsByParkingSpotNumber(parkingSpotRequest.getParkingSpotNumber())) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Parking Spot is already in use!");
-        }
-
-        if (parkingSpotService.existsByApartmentAndBlock(parkingSpotRequest.getApartment(), parkingSpotRequest.getBlock())) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Parking Spot already registered for this apartment/block!");
-        }
-
-//        var parkingSpotModel = new ParkingSpotModel();
-//        BeanUtils.copyProperties(parkingSpotRequest, parkingSpotModel);
-//        parkingSpotModel.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC")));
-//        return ResponseEntity.status(HttpStatus.CREATED).body(parkingSpotService.save(parkingSpotModel));
+//        if (parkingSpotService.existsByLicensePlateCar(parkingSpotRequest.getLicensePlateCar())) {
+//            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Licence Plate Car is already in use!");
+//        }
+//
+//        if (parkingSpotService.existsByParkingSpotNumber(parkingSpotRequest.getParkingSpotNumber())) {
+//            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Parking Spot is already in use!");
+//        }
+//
+//        if (parkingSpotService.existsByApartmentAndBlock(parkingSpotRequest.getApartment(), parkingSpotRequest.getBlock())) {
+//            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Parking Spot already registered for this apartment/block!");
+//        }
 
         var parkingSpotModel = new ParkingSpotModel(parkingSpotRequest, LocalDateTime.now(ZoneId.of("UTC")));
         parkingSpotService.save(parkingSpotModel);
@@ -66,10 +61,6 @@ public class ParkingSpotController {
     @GetMapping("/{id}")
     public ResponseEntity<Object> findParkingSpot(@PathVariable(value = "id") UUID id) {
         var parkingSpotModel = parkingSpotService.findById(id);
-//        if (!parkingSpotModel.isPresent()) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Parking spot not found!");
-//        }
-//        parkingSpotModel.get()
         return ResponseEntity.status(HttpStatus.OK).body(new ParkingSpotResponse(parkingSpotModel));
     }
 
@@ -77,9 +68,6 @@ public class ParkingSpotController {
     @Transactional
     public ResponseEntity<Object> deleteParkingSpot(@PathVariable(value = "id") UUID id) {
         var parkingSpotModel = parkingSpotService.findById(id);
-//        if (!parkingSpotModel.isPresent()) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Parking spot not found!");
-//        }
         parkingSpotService.delete(parkingSpotModel);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -89,9 +77,6 @@ public class ParkingSpotController {
     public ResponseEntity<Object> updateParkingSpot(@PathVariable(value = "id") UUID id,
                                                     @RequestBody @Valid ParkingSpotUpdateRequest parkingSpotUpdateRequest) {
         var parkingSpotModel = parkingSpotService.findById(id);
-//        if (!parkingSpotModelOptional.isPresent()) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Parking spot not found!");
-//        }
         parkingSpotModel.updateParkingSpot(parkingSpotUpdateRequest);
 
         return ResponseEntity.status(HttpStatus.OK).body(new ParkingSpotResponse(parkingSpotModel));

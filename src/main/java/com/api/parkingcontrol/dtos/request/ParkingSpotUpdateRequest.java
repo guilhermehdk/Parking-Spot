@@ -1,6 +1,6 @@
 package com.api.parkingcontrol.dtos.request;
 
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ParkingSpotUpdateRequest {
     private String parkingSpotNumber;
-    @Size(max = 7)
+    @Pattern(regexp = "^[a-zA-Z]{3}\\d{4}$", message = "This field must have 3 letters followed by 4 digits")
     private String licensePlateCar;
     private String brandCar;
     private String modelCar;
