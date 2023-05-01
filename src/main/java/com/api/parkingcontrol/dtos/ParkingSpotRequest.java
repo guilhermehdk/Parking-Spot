@@ -10,10 +10,10 @@ import lombok.*;
 public class ParkingSpotRequest {
 
     @NotBlank
-    private String parkingSpotNuber;
+    private String parkingSpotNumber;
     @NotBlank
     @Size(max = 7)
-    private String licensePlatCar;
+    private String licensePlateCar;
     @NotBlank
     private String brandCar;
     @NotBlank
