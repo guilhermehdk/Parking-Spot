@@ -1,10 +1,9 @@
 package com.api.parkingcontrol.models;
 
+import com.api.parkingcontrol.dtos.request.ParkingSpotRequest;
+import com.api.parkingcontrol.dtos.request.ParkingSpotUpdateRequest;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -16,6 +15,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of = "id")
 public class ParkingSpotModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -40,4 +40,46 @@ public class ParkingSpotModel implements Serializable {
     private String apartment;
     @Column(nullable = false, length = 30)
     private String block;
+
+    public ParkingSpotModel(ParkingSpotRequest parkingSpotRequest, LocalDateTime localDateTime) {
+        this(
+                null,
+                parkingSpotRequest.getParkingSpotNumber(),
+                parkingSpotRequest.getLicensePlateCar(),
+                parkingSpotRequest.getBrandCar(),
+                parkingSpotRequest.getModelCar(),
+                parkingSpotRequest.getColorCar(),
+                localDateTime,
+                parkingSpotRequest.getResponsibleName(),
+                parkingSpotRequest.getApartment(),
+                parkingSpotRequest.getBlock()
+        );
+    }
+
+    public void updateParkingSpot(ParkingSpotUpdateRequest parkingSpotUpdateRequest) {
+        if (parkingSpotUpdateRequest.getParkingSpotNumber() != null) {
+            setParkingSpotNumber(parkingSpotUpdateRequest.getParkingSpotNumber());
+        }
+        if (parkingSpotUpdateRequest.getLicensePlateCar() != null) {
+            setLicensePlateCar(parkingSpotUpdateRequest.getLicensePlateCar());
+        }
+        if (parkingSpotUpdateRequest.getBrandCar() != null) {
+            setBrandCar(parkingSpotUpdateRequest.getBrandCar());
+        }
+        if (parkingSpotUpdateRequest.getModelCar() != null) {
+            setModelCar(parkingSpotUpdateRequest.getModelCar());
+        }
+        if (parkingSpotUpdateRequest.getColorCar() != null) {
+            setColorCar(parkingSpotUpdateRequest.getColorCar());
+        }
+        if (parkingSpotUpdateRequest.getResponsibleName() != null) {
+            setResponsibleName(parkingSpotUpdateRequest.getResponsibleName());
+        }
+        if (parkingSpotUpdateRequest.getApartment() != null) {
+            setApartment(parkingSpotUpdateRequest.getApartment());
+        }
+        if (parkingSpotUpdateRequest.getBlock() != null) {
+            setBlock(parkingSpotUpdateRequest.getBlock());
+        }
+    }
 }

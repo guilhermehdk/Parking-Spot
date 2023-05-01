@@ -8,8 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -19,8 +17,8 @@ public class ParkingSpotService {
     private ParkingSpotRepository parkingSpotRepository;
 
     @Transactional
-    public ParkingSpotModel save(ParkingSpotModel parkingSpotModel) {
-        return parkingSpotRepository.save(parkingSpotModel);
+    public void save(ParkingSpotModel parkingSpotModel) {
+        parkingSpotRepository.save(parkingSpotModel);
     }
 
     public boolean existsByLicensePlateCar(String licensePlateCar) {
@@ -39,8 +37,8 @@ public class ParkingSpotService {
         return parkingSpotRepository.findAll(pageable);
     }
 
-    public Optional<ParkingSpotModel> findById(UUID id) {
-        return parkingSpotRepository.findById(id);
+    public ParkingSpotModel findById(UUID id) {
+        return parkingSpotRepository.findById(id).get();
     }
 
     @Transactional
