@@ -23,9 +23,9 @@ public class ParkingSpotModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     @Column(nullable = false, unique = true, length = 10)
-    private String parkingSpotNuber;
+    private String parkingSpotNumber;
     @Column(nullable = false, unique = true, length = 7)
-    private String licensePlatCar;
+    private String licensePlateCar;
     @Column(nullable = false, length = 100)
     private String brandCar;
     @Column(nullable = false, length = 100)
