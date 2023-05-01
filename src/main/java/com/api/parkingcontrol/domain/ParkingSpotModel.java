@@ -1,4 +1,4 @@
-package com.api.parkingcontrol.models;
+package com.api.parkingcontrol.domain;
 
 import com.api.parkingcontrol.dtos.request.ParkingSpotRequest;
 import com.api.parkingcontrol.dtos.request.ParkingSpotUpdateRequest;

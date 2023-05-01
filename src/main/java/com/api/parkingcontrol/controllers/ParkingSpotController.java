@@ -1,10 +1,9 @@
 package com.api.parkingcontrol.controllers;
 
+import com.api.parkingcontrol.domain.ParkingSpotModel;
 import com.api.parkingcontrol.dtos.request.ParkingSpotRequest;
 import com.api.parkingcontrol.dtos.request.ParkingSpotUpdateRequest;
 import com.api.parkingcontrol.dtos.response.ParkingSpotResponse;
-import com.api.parkingcontrol.models.ParkingSpotModel;
-import com.api.parkingcontrol.respositories.ParkingSpotRepository;
 import com.api.parkingcontrol.service.ParkingSpotService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.UUID;
 
 @RestController
@@ -32,21 +29,7 @@ public class ParkingSpotController {
     @PostMapping
     @Transactional
     public ResponseEntity<Object> saveParkingSpot(@RequestBody @Valid ParkingSpotRequest parkingSpotRequest, UriComponentsBuilder uriComponentsBuilder) {
-//        if (parkingSpotService.existsByLicensePlateCar(parkingSpotRequest.getLicensePlateCar())) {
-//            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Licence Plate Car is already in use!");
-//        }
-//
-//        if (parkingSpotService.existsByParkingSpotNumber(parkingSpotRequest.getParkingSpotNumber())) {
-//            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Parking Spot is already in use!");
-//        }
-//
-//        if (parkingSpotService.existsByApartmentAndBlock(parkingSpotRequest.getApartment(), parkingSpotRequest.getBlock())) {
-//            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Parking Spot already registered for this apartment/block!");
-//        }
-
-        var parkingSpotModel = new ParkingSpotModel(parkingSpotRequest, LocalDateTime.now(ZoneId.of("UTC")));
-        parkingSpotService.save(parkingSpotModel);
-
+        var parkingSpotModel = parkingSpotService.save(parkingSpotRequest);
         var uri = uriComponentsBuilder.path("/{id}").buildAndExpand(parkingSpotModel.getId()).toUri();
 
         return ResponseEntity.created(uri).body(new ParkingSpotResponse(parkingSpotModel));
@@ -76,9 +59,7 @@ public class ParkingSpotController {
     @Transactional
     public ResponseEntity<Object> updateParkingSpot(@PathVariable(value = "id") UUID id,
                                                     @RequestBody @Valid ParkingSpotUpdateRequest parkingSpotUpdateRequest) {
-        var parkingSpotModel = parkingSpotService.findById(id);
-        parkingSpotModel.updateParkingSpot(parkingSpotUpdateRequest);
-
+        var parkingSpotModel = parkingSpotService.update(id, parkingSpotUpdateRequest);
         return ResponseEntity.status(HttpStatus.OK).body(new ParkingSpotResponse(parkingSpotModel));
     }
 
