@@ -1,6 +1,9 @@
 package com.api.parkingcontrol.service;
 
-import com.api.parkingcontrol.models.ParkingSpotModel;
+import com.api.parkingcontrol.domain.ParkingSpotModel;
+import com.api.parkingcontrol.domain.validator.ParkingSpotValidator;
+import com.api.parkingcontrol.dtos.request.ParkingSpotRequest;
+import com.api.parkingcontrol.dtos.request.ParkingSpotUpdateRequest;
 import com.api.parkingcontrol.respositories.ParkingSpotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -8,6 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -16,21 +22,18 @@ public class ParkingSpotService {
     @Autowired
     private ParkingSpotRepository parkingSpotRepository;
 
+    @Autowired
+    private List<ParkingSpotValidator> parkingSpotValidators;
+
     @Transactional
-    public void save(ParkingSpotModel parkingSpotModel) {
+    public ParkingSpotModel save(ParkingSpotRequest parkingSpotRequest) {
+
+        parkingSpotValidators.forEach(validator -> validator.validate(parkingSpotRequest));
+
+        var parkingSpotModel = new ParkingSpotModel(parkingSpotRequest, LocalDateTime.now(ZoneId.of("UTC")));
         parkingSpotRepository.save(parkingSpotModel);
-    }
 
-    public boolean existsByLicensePlateCar(String licensePlateCar) {
-        return parkingSpotRepository.existsByLicensePlateCar(licensePlateCar);
-    }
-
-    public boolean existsByParkingSpotNumber(String parkingSpotNumber) {
-        return parkingSpotRepository.existsByParkingSpotNumber(parkingSpotNumber);
-    }
-
-    public boolean existsByApartmentAndBlock(String apartment, String block) {
-        return parkingSpotRepository.existsByApartmentAndBlock(apartment, block);
+        return parkingSpotModel;
     }
 
     public Page<ParkingSpotModel> findAll(Pageable pageable) {
@@ -44,5 +47,17 @@ public class ParkingSpotService {
     @Transactional
     public void delete(ParkingSpotModel parkingSpotModel) {
         parkingSpotRepository.delete(parkingSpotModel);
+    }
+
+    @Transactional
+    public ParkingSpotModel update(UUID id, ParkingSpotUpdateRequest parkingSpotUpdateRequest) {
+//        TODO: Validação de regras de negócios para update
+//        var parkingSpotRequest = new ParkingSpotRequest();
+//        BeanUtils.copyProperties(parkingSpotUpdateRequest,parkingSpotRequest);
+//        parkingSpotValidators.forEach(validator -> validator.validate(parkingSpotRequest));
+
+        var parkingSpotModel = findById(id);
+        parkingSpotModel.updateParkingSpot(parkingSpotUpdateRequest);
+        return parkingSpotModel;
     }
 }

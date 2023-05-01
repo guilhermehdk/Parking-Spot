@@ -17,6 +17,12 @@ import java.util.NoSuchElementException;
 @RestControllerAdvice
 public class ExceptionControllerAdvice {
 
+    //Sem conformidade com as regras de negócio
+    @ExceptionHandler(ParkingSpotValidatorException.class)
+    public ResponseEntity<Object> parkingSpotValidatorException(ParkingSpotValidatorException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
     //JSON com campos nulos ou inválidos
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> methodArgumentNotValidException(MethodArgumentNotValidException ex) {

@@ -1,6 +1,6 @@
 package com.api.parkingcontrol.dtos.response;
 
-import com.api.parkingcontrol.models.ParkingSpotModel;
+import com.api.parkingcontrol.domain.ParkingSpotModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
