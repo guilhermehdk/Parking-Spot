@@ -1,6 +1,5 @@
 package com.api.parkingcontrol.controllers;
 
-import com.api.parkingcontrol.domain.ParkingSpotModel;
 import com.api.parkingcontrol.dtos.request.ParkingSpotRequest;
 import com.api.parkingcontrol.dtos.request.ParkingSpotUpdateRequest;
 import com.api.parkingcontrol.dtos.response.ParkingSpotResponse;
@@ -29,29 +28,27 @@ public class ParkingSpotController {
     @PostMapping
     @Transactional
     public ResponseEntity<Object> saveParkingSpot(@RequestBody @Valid ParkingSpotRequest parkingSpotRequest, UriComponentsBuilder uriComponentsBuilder) {
-        var parkingSpotModel = parkingSpotService.save(parkingSpotRequest);
-        var uri = uriComponentsBuilder.path("/{id}").buildAndExpand(parkingSpotModel.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(new ParkingSpotResponse(parkingSpotModel));
+        var parkingSpotResponse = parkingSpotService.save(parkingSpotRequest);
+        var uri = uriComponentsBuilder.path("/{id}").buildAndExpand(parkingSpotResponse.getId()).toUri();
+        return ResponseEntity.created(uri).body(parkingSpotResponse);
     }
 
     @GetMapping
-    public ResponseEntity<Page<ParkingSpotModel>> getAllParkingSpots(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC)
-                                                                     Pageable pageable) {
+    public ResponseEntity<Page<ParkingSpotResponse>> getAllParkingSpots(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC)
+                                                                        Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.findAll(pageable));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> findParkingSpot(@PathVariable(value = "id") UUID id) {
-        var parkingSpotModel = parkingSpotService.findById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(new ParkingSpotResponse(parkingSpotModel));
+        var parkingSpotResponse = parkingSpotService.findParkingSpotById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(parkingSpotResponse);
     }
 
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<Object> deleteParkingSpot(@PathVariable(value = "id") UUID id) {
-        var parkingSpotModel = parkingSpotService.findById(id);
-        parkingSpotService.delete(parkingSpotModel);
+        parkingSpotService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
@@ -59,8 +56,8 @@ public class ParkingSpotController {
     @Transactional
     public ResponseEntity<Object> updateParkingSpot(@PathVariable(value = "id") UUID id,
                                                     @RequestBody @Valid ParkingSpotUpdateRequest parkingSpotUpdateRequest) {
-        var parkingSpotModel = parkingSpotService.update(id, parkingSpotUpdateRequest);
-        return ResponseEntity.status(HttpStatus.OK).body(new ParkingSpotResponse(parkingSpotModel));
+        var parkingSpotResponse = parkingSpotService.update(id, parkingSpotUpdateRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(parkingSpotResponse);
     }
 
 }

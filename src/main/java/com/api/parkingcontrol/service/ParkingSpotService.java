@@ -4,6 +4,7 @@ import com.api.parkingcontrol.domain.ParkingSpotModel;
 import com.api.parkingcontrol.domain.validator.ParkingSpotValidator;
 import com.api.parkingcontrol.dtos.request.ParkingSpotRequest;
 import com.api.parkingcontrol.dtos.request.ParkingSpotUpdateRequest;
+import com.api.parkingcontrol.dtos.response.ParkingSpotResponse;
 import com.api.parkingcontrol.respositories.ParkingSpotRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,31 +27,30 @@ public class ParkingSpotService {
     private List<ParkingSpotValidator> parkingSpotValidators;
 
     @Transactional
-    public ParkingSpotModel save(ParkingSpotRequest parkingSpotRequest) {
+    public ParkingSpotResponse save(ParkingSpotRequest parkingSpotRequest) {
 
         parkingSpotValidators.forEach(validator -> validator.validate(parkingSpotRequest));
 
         var parkingSpotModel = new ParkingSpotModel(parkingSpotRequest, LocalDateTime.now(ZoneId.of("UTC")));
         parkingSpotRepository.save(parkingSpotModel);
-
-        return parkingSpotModel;
+        return new ParkingSpotResponse(parkingSpotModel);
     }
 
-    public Page<ParkingSpotModel> findAll(Pageable pageable) {
-        return parkingSpotRepository.findAll(pageable);
+    public Page<ParkingSpotResponse> findAll(Pageable pageable) {
+        return parkingSpotRepository.findAll(pageable).map(ParkingSpotResponse::new);
     }
 
     public ParkingSpotModel findById(UUID id) {
         return parkingSpotRepository.findById(id).get();
     }
 
-    @Transactional
-    public void delete(ParkingSpotModel parkingSpotModel) {
-        parkingSpotRepository.delete(parkingSpotModel);
+    public ParkingSpotResponse findParkingSpotById(UUID id) {
+        var parkingSpotModel = findById(id);
+        return new ParkingSpotResponse(parkingSpotModel);
     }
 
     @Transactional
-    public ParkingSpotModel update(UUID id, ParkingSpotUpdateRequest parkingSpotUpdateRequest) {
+    public ParkingSpotResponse update(UUID id, ParkingSpotUpdateRequest parkingSpotUpdateRequest) {
 //        TODO: Validação de regras de negócios para update
 //        var parkingSpotRequest = new ParkingSpotRequest();
 //        BeanUtils.copyProperties(parkingSpotUpdateRequest,parkingSpotRequest);
@@ -58,6 +58,12 @@ public class ParkingSpotService {
 
         var parkingSpotModel = findById(id);
         parkingSpotModel.updateParkingSpot(parkingSpotUpdateRequest);
-        return parkingSpotModel;
+        return new ParkingSpotResponse(parkingSpotModel);
+    }
+
+    @Transactional
+    public void deleteById(UUID id) {
+        var parkingSpotModel = findById(id);
+        parkingSpotRepository.delete(parkingSpotModel);
     }
 }
