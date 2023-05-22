@@ -51,12 +51,17 @@ public class ParkingSpotService {
 
     @Transactional
     public ParkingSpotResponse update(UUID id, ParkingSpotUpdateRequest parkingSpotUpdateRequest) {
-//        TODO: Validação de regras de negócios para update
-//        var parkingSpotRequest = new ParkingSpotRequest();
-//        BeanUtils.copyProperties(parkingSpotUpdateRequest,parkingSpotRequest);
-//        parkingSpotValidators.forEach(validator -> validator.validate(parkingSpotRequest));
 
         var parkingSpotModel = findById(id);
+        if (parkingSpotUpdateRequest.getApartment() != null && parkingSpotUpdateRequest.getBlock() == null){
+            parkingSpotUpdateRequest.setBlock(parkingSpotModel.getBlock());
+        }
+        if (parkingSpotUpdateRequest.getBlock() != null && parkingSpotUpdateRequest.getApartment() == null){
+            parkingSpotUpdateRequest.setApartment(parkingSpotModel.getApartment());
+        }
+
+        parkingSpotValidators.forEach(validator -> validator.validate(parkingSpotUpdateRequest));
+
         parkingSpotModel.updateParkingSpot(parkingSpotUpdateRequest);
         return new ParkingSpotResponse(parkingSpotModel);
     }
