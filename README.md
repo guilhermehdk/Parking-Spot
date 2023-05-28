@@ -36,33 +36,62 @@ To run the Parking Management System locally on your machine, follow these steps
 6. Access the application in your API testing tool (Postman or similar) by navigating to http://localhost:8080.
 
 # Usage
-Once the application is up and running, you can access the various CRUD operations through the user interface. Here's a brief guide on how to use the system:
+Once the application is up and running, you can access the various CRUD operations with Postman.
+I will be making updates in the future to implement a frontend access the CRUP operations through the user interface.
+Here's a brief guide on how to use the system:
 
-Create a new parking space:
+1. Create a new parking spot:
+    - HTTP method: **POST**
+    - URL: http://localhost:8080/parking-spot
+    - Body:
 
-Click on the "Add Parking Space" button.
-Fill in the required details, such as the owner's name, apartment number, and vehicle information.
-Click "Save" to add the parking space to the system.
-View existing parking spaces:
+            {
+            "parkingSpotNumber": "602B",
+            "licensePlateCar": "ABC4321",
+            "brandCar": "Toyota",
+            "modelCar": "Corolla",
+            "colorCar": "silver",
+            "responsibleName": "John",
+            "apartment": "602",
+            "block": "B"
+            }
+            
+    The expected return is:
+    - HTTP response status code: **201 (CREATED)**
+    - ID and parking spot information.
 
-The main dashboard will display a list of all parking spaces in the apartment building.
-Each entry will include details such as the owner's name, apartment number, and vehicle information.
-Update a parking space:
+![1-Create](https://github.com/guilhermehdk/assets/blob/main/parking-spot/1-Create.png)
 
-Find the parking space you wish to update in the list.
-Click on the "Edit" button next to the corresponding entry.
-Update the relevant information.
-Click "Save" to apply the changes.
-Delete a parking space:
+2. View existing parking spot:
+    - HTTP method: **GET**
+    - URL: http://localhost:8080/parking-spot
+            
+    The expected return is:
+    - HTTP response status code: **200 (OK)**
+    - All parking spaces registered in the database and their data.
 
-Locate the parking space you want to remove.
-Click on the "Delete" button next to the corresponding entry.
-Confirm the deletion when prompted.
-Contributing
+![3-FindAll](https://github.com/guilhermehdk/assets/blob/main/parking-spot/3-FindAll.png)
+
+2. View existing parking spaces:
+    - The main dashboard will display a list of all parking spaces in the apartment building.
+    - Each entry will include details such as the owner's name, apartment number, and vehicle information.
+
+3. Update a parking space:
+    - Find the parking space you wish to update in the list.
+    - Click on the "Edit" button next to the corresponding entry.
+    - Update the relevant information.
+    - Click "Save" to apply the changes.
+
+4. Delete a parking space:
+    - Locate the parking space you want to remove.
+    - Click on the "Delete" button next to the corresponding entry.
+    - Confirm the deletion when prompted.
+
+# Contributing
 Contributions to the Parking Management System project are welcome. If you have any ideas, suggestions, or bug reports, please submit them via GitHub issues. You can also fork the repository, make the desired changes, and submit a pull request.
 
-License
-This project is licensed under the MIT License. Feel free to use and modify the code as per your needs
+
+
 
 # Big Game Survey 
 [![NPM](https://img.shields.io/npm/l/react)](https://github.com/devsuperior/sds1-wmazoni/blob/master/LICENSE) 
