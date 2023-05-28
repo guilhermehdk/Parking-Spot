@@ -45,6 +45,18 @@ Here's a brief guide on how to use the system:
     - URL: http://localhost:8080/parking-spot
     - Body:
 
+
+      It must have all fields of the parking space data:
+
+      - parkingSpotNumber
+      - licensePlateCar
+      - brandCar
+      - modelCar
+      - colorCar
+      - responsibleName
+      - apartment
+      - block
+
             {
             "parkingSpotNumber": "602B",
             "licensePlateCar": "ABC4321",
@@ -55,7 +67,7 @@ Here's a brief guide on how to use the system:
             "apartment": "602",
             "block": "B"
             }
-            
+      
     The expected return is:
     - HTTP response status code: **201 (CREATED)**
     - ID and parking spot information.
@@ -72,17 +84,69 @@ Here's a brief guide on how to use the system:
 
 ![3-FindAll](https://github.com/guilhermehdk/assets/blob/main/parking-spot/3-FindAll.png)
 
-2. View existing parking spaces:
-    - The main dashboard will display a list of all parking spaces in the apartment building.
-    - Each entry will include details such as the owner's name, apartment number, and vehicle information.
+3. View existing parking spot by page:
+    - HTTP method: **GET**
+    - URL: http://localhost:8080/parking-spot?page=1&size=5&sort=parkingSpotNumber,DESC
+            
+    The expected return is:
+    - HTTP response status code: **200 (OK)**
+    - All parking spaces registered in the database and their data.
 
-3. Update a parking space:
-    - Find the parking space you wish to update in the list.
-    - Click on the "Edit" button next to the corresponding entry.
-    - Update the relevant information.
-    - Click "Save" to apply the changes.
+![4-FindAllPage](https://github.com/guilhermehdk/assets/blob/main/parking-spot/4-FindAllPage.png)
 
-4. Delete a parking space:
+4. Find parking spot by ID:
+    - HTTP method: **GET**
+    - URL: http://localhost:8080/parking-spot/ca331c7e-c3e2-4e72-9609-919ee91a495a
+            
+    The expected return is:
+    - HTTP response status code: **200 (OK)**
+    - Data of the respective parking spot.
+
+![5-FindById](https://github.com/guilhermehdk/assets/blob/main/parking-spot/5-FindById.png)
+
+5. Update a parking spot:
+    - HTTP method: **PUT**
+    - URL: http://localhost:8080/{id}
+
+       where **{id}** is the ID of the parking spot
+       for example: http://localhost:8080/parking-spot/ca331c7e-c3e2-4e72-9609-919ee91a495a
+    - Body:
+
+      It should include one or more fields of the parking space data:
+
+      - parkingSpotNumber
+      - licensePlateCar
+      - brandCar
+      - modelCar
+      - colorCar
+      - responsibleName
+      - apartment
+      - block
+
+            {
+            "parkingSpotNumber": "602D"
+            }
+            
+    The expected return is:
+    - HTTP response status code: **200 (OK)**
+    - ID and parking spot information.
+
+![2-Update](https://github.com/guilhermehdk/assets/blob/main/parking-spot/2-Update.png)
+
+6. Delete a parking spot:
+ 
+    - HTTP method: **DELETE**
+    - URL: http://localhost:8080/{id}
+
+       where **{id}** is the ID of the parking spot
+       for example: http://localhost:8080/parking-spot/ca331c7e-c3e2-4e72-9609-919ee91a495a
+            
+    The expected return is:
+    - HTTP response status code: **204 (NO CONTENT)**
+
+![6-Delete](https://github.com/guilhermehdk/assets/blob/main/parking-spot/6-Delete.png)
+
+
     - Locate the parking space you want to remove.
     - Click on the "Delete" button next to the corresponding entry.
     - Confirm the deletion when prompted.
