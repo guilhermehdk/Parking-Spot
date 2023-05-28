@@ -36,39 +36,40 @@ To run the Parking Management System locally on your machine, follow these steps
 6. Access the application in your API testing tool (Postman or similar) by navigating to http://localhost:8080.
 
 # Usage
-Once the application is up and running, you can access the various CRUD operations with Postman.
-I will be making updates in the future to implement a frontend access the CRUP operations through the user interface.
-Here's a brief guide on how to use the system:
 
-1. Create a new parking spot:
-    - HTTP method: **POST**
-    - URL: http://localhost:8080/parking-spot
-    - Body:
+Once the application is up and running, you can access the various CRUD operations with Postman. Here's a brief guide on how to use the system:
 
+###### I will be making updates in the future to implement a frontend that will enable the execution of CRUD operations through the user interface.
 
-      It must have all fields of the parking space data:
-
-      - parkingSpotNumber
-      - licensePlateCar
-      - brandCar
-      - modelCar
-      - colorCar
-      - responsibleName
-      - apartment
-      - block
-
-            {
-            "parkingSpotNumber": "602B",
-            "licensePlateCar": "ABC4321",
-            "brandCar": "Toyota",
-            "modelCar": "Corolla",
-            "colorCar": "silver",
-            "responsibleName": "John",
-            "apartment": "602",
-            "block": "B"
-            }
+### 1. Create a new parking spot:
       
-    The expected return is:
+- HTTP method: **POST**
+- URL: http://localhost:8080/parking-spot
+- Body:
+
+    It must have all fields of the parking space data:
+
+    - parkingSpotNumber
+    - licensePlateCar
+    - brandCar
+    - modelCar
+    - colorCar
+    - responsibleName
+    - apartment
+    - block
+
+          {
+          "parkingSpotNumber": "602B",
+          "licensePlateCar": "ABC4321",
+          "brandCar": "Toyota",
+          "modelCar": "Corolla",
+          "colorCar": "silver",
+          "responsibleName": "John",
+          "apartment": "602",
+          "block": "B"
+          }
+
+- The expected return is:
     - HTTP response status code: **201 (CREATED)**
     - ID and parking spot information.
 
@@ -127,6 +128,7 @@ Here's a brief guide on how to use the system:
             "parkingSpotNumber": "602D"
             }
             
+            
     The expected return is:
     - HTTP response status code: **200 (OK)**
     - ID and parking spot information.
@@ -146,10 +148,6 @@ Here's a brief guide on how to use the system:
 
 ![6-Delete](https://github.com/guilhermehdk/assets/blob/main/parking-spot/6-Delete.png)
 
-
-    - Locate the parking space you want to remove.
-    - Click on the "Delete" button next to the corresponding entry.
-    - Confirm the deletion when prompted.
 
 # Contributing
 Contributions to the Parking Management System project are welcome. If you have any ideas, suggestions, or bug reports, please submit them via GitHub issues. You can also fork the repository, make the desired changes, and submit a pull request.
