@@ -75,160 +75,109 @@ Once the application is up and running, you can access the various CRUD operatio
 
 ![1-Create](https://github.com/guilhermehdk/assets/blob/main/parking-spot/1-Create.png)
 
-2. View existing parking spot:
-    - HTTP method: **GET**
-    - URL: http://localhost:8080/parking-spot
-            
-    The expected return is:
+### 2. View existing parking spot:
+      
+- HTTP method: **GET**
+- URL: http://localhost:8080/parking-spot
+
+- The expected return is:
     - HTTP response status code: **200 (OK)**
     - All parking spaces registered in the database and their data.
 
 ![3-FindAll](https://github.com/guilhermehdk/assets/blob/main/parking-spot/3-FindAll.png)
 
-3. View existing parking spot by page:
-    - HTTP method: **GET**
-    - URL: http://localhost:8080/parking-spot?page=1&size=5&sort=parkingSpotNumber,DESC
-            
-    The expected return is:
+### 3. View existing parking spot by page:
+      
+- HTTP method: **GET**
+- URL: http://localhost:8080/parking-spot?page=1&size=5&sort=parkingSpotNumber,DESC
+
+- The expected return is:
     - HTTP response status code: **200 (OK)**
     - All parking spaces registered in the database and their data.
 
 ![4-FindAllPage](https://github.com/guilhermehdk/assets/blob/main/parking-spot/4-FindAllPage.png)
 
-4. Find parking spot by ID:
-    - HTTP method: **GET**
-    - URL: http://localhost:8080/parking-spot/ca331c7e-c3e2-4e72-9609-919ee91a495a
-            
-    The expected return is:
+### 4. Find parking spot by ID:
+      
+- HTTP method: **GET**
+- URL: http://localhost:8080/{id}
+
+     where **{id}** is the ID of the parking spot
+     
+     for example: http://localhost:8080/parking-spot/ca331c7e-c3e2-4e72-9609-919ee91a495a
+
+- The expected return is:
     - HTTP response status code: **200 (OK)**
     - Data of the respective parking spot.
 
 ![5-FindById](https://github.com/guilhermehdk/assets/blob/main/parking-spot/5-FindById.png)
 
-5. Update a parking spot:
-    - HTTP method: **PUT**
-    - URL: http://localhost:8080/{id}
+### 5. Update a parking spot:
+      
+- HTTP method: **PUT**
+- URL: http://localhost:8080/{id}
 
-       where **{id}** is the ID of the parking spot
-       for example: http://localhost:8080/parking-spot/ca331c7e-c3e2-4e72-9609-919ee91a495a
-    - Body:
+     where **{id}** is the ID of the parking spot
+     
+     for example: http://localhost:8080/parking-spot/ca331c7e-c3e2-4e72-9609-919ee91a495a
 
-      It should include one or more fields of the parking space data:
+- Body:
 
-      - parkingSpotNumber
-      - licensePlateCar
-      - brandCar
-      - modelCar
-      - colorCar
-      - responsibleName
-      - apartment
-      - block
+    It should include one or more fields of the parking space data:
 
-            {
-            "parkingSpotNumber": "602D"
-            }
-            
-            
-    The expected return is:
+    - parkingSpotNumber
+    - licensePlateCar
+    - brandCar
+    - modelCar
+    - colorCar
+    - responsibleName
+    - apartment
+    - block
+
+          {
+          "parkingSpotNumber": "602D"
+          }
+
+- The expected return is:
     - HTTP response status code: **200 (OK)**
     - ID and parking spot information.
 
 ![2-Update](https://github.com/guilhermehdk/assets/blob/main/parking-spot/2-Update.png)
 
-6. Delete a parking spot:
- 
-    - HTTP method: **DELETE**
-    - URL: http://localhost:8080/{id}
+### 6. Delete a parking spot:
+      
+- HTTP method: **DELETE**
+- URL: http://localhost:8080/{id}
 
-       where **{id}** is the ID of the parking spot
-       for example: http://localhost:8080/parking-spot/ca331c7e-c3e2-4e72-9609-919ee91a495a
-            
-    The expected return is:
+     where **{id}** is the ID of the parking spot
+     
+     for example: http://localhost:8080/parking-spot/ca331c7e-c3e2-4e72-9609-919ee91a495a
+
+- The expected return is:
     - HTTP response status code: **204 (NO CONTENT)**
 
 ![6-Delete](https://github.com/guilhermehdk/assets/blob/main/parking-spot/6-Delete.png)
 
+# Validators
+Before creating or updating a parking spot, some validations are performed:
 
-# Contributing
-Contributions to the Parking Management System project are welcome. If you have any ideas, suggestions, or bug reports, please submit them via GitHub issues. You can also fork the repository, make the desired changes, and submit a pull request.
+1. If attempting to create or update a parking spot with an existing license plate, the following message will be returned:
 
+       "Conflict: Licence Plate Car is already in use!"
 
+2. If attempting to create or update a parking spot with an existing parking spot, the following message will be returned: 
 
+       "Conflict: Parking Spot is already in use!"
 
-# Big Game Survey 
-[![NPM](https://img.shields.io/npm/l/react)](https://github.com/devsuperior/sds1-wmazoni/blob/master/LICENSE) 
+3. If attempting to create or update a parking spot with an existing apartment and block, the following message will be returned:
 
-# Sobre o projeto
+       "Conflict: Parking Spot already registered for this apartment/block!"
 
-https://wmazoni-sds1.netlify.app
+# Author
 
-Big Game Survey é uma aplicação full stack web e mobile construída durante a 1ª edição da **Semana DevSuperior** (#sds1), evento organizado pela [DevSuperior](https://devsuperior.com "Site da DevSuperior").
+Guilherme Hideki Shibukawa
 
-A aplicação consiste em uma pesquisa de preferência de games, onde os dados são coletados no app mobile, e depois são listados no app web, que também apresenta um dashboard com gráficos baseados nestes dados.
-
-## Layout mobile
-![Mobile 1](https://github.com/acenelio/assets/raw/main/sds1/mobile1.png) ![Mobile 2](https://github.com/acenelio/assets/raw/main/sds1/mobile2.png)
-
-## Layout web
-![Web 1](https://github.com/acenelio/assets/raw/main/sds1/web1.png)
-
-![Web 2](https://github.com/acenelio/assets/raw/main/sds1/web2.png)
-
-## Modelo conceitual
-![Modelo Conceitual](https://github.com/acenelio/assets/raw/main/sds1/modelo-conceitual.png)
-
-# Tecnologias utilizadas
-## Back end
-- Java
-- Spring Boot
-- JPA / Hibernate
-- Maven
-## Front end
-- HTML / CSS / JS / TypeScript
-- ReactJS
-- React Native
-- Apex Charts
-- Expo
-## Implantação em produção
-- Back end: Heroku
-- Front end web: Netlify
-- Banco de dados: Postgresql
-
-# Como executar o projeto
-
-## Back end
-Pré-requisitos: Java 11
-
-```bash
-# clonar repositório
-git clone https://github.com/devsuperior/sds1-wmazoni
-
-# entrar na pasta do projeto back end
-cd backend
-
-# executar o projeto
-./mvnw spring-boot:run
-```
-
-## Front end web
-Pré-requisitos: npm / yarn
-
-```bash
-# clonar repositório
-git clone https://github.com/devsuperior/sds1-wmazoni
-
-# entrar na pasta do projeto front end web
-cd front-web
-
-# instalar dependências
-yarn install
-
-# executar o projeto
-yarn start
-```
-
-# Autor
-
-Wellington Mazoni de Andrade
-
-https://www.linkedin.com/in/wmazoni
+### Let's Connect 🤝
+<div>
+<a href="https://www.linkedin.com/in/guilherme-shibukawa/" target="_blank"> <img height="40" width="40" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" target="_blank"></a>   
+</div>
