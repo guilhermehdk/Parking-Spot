@@ -18,18 +18,22 @@ This README provides an overview of the Parking Management System, a CRUD (Creat
 To run the Parking Management System locally on your machine, follow these steps:
 
 1. Clone the repository to your local machine using the following command:
-  > bash
-  >> git clone https://github.com/your-username/parking-management-system.git
 
-1. Open the project in your preferred Integrated Development Environment (IDE).
+      (bash)
+      > git clone https://github.com/your-username/parking-management-system.git
 
-1. Configure the MySQL database connection properties in the application.properties file, providing the necessary credentials and connection details.
+2. Open the project in your preferred Integrated Development Environment (IDE).
 
-1. Build the project and resolve any dependencies using your build tool (e.g., Maven or Gradle).
+3. Configure the MySQL database connection properties in the application.properties file, providing the necessary credentials and connection details:
+    - **DB_URL**: Database URL;
+    - **DB_USER**: Database username;
+    - **DB_PASSWORD**: Database password.
 
-1. Run the application, and it will start on the specified port (default is 8080).
+4. Build the project and resolve any dependencies using your build tool (Maven).
 
-1. Access the application in your web browser by navigating to http://localhost:8080.
+5. Run the application, and it will start on the specified port (default is 8080).
+
+6. Access the application in your API testing tool (Postman or similar) by navigating to http://localhost:8080.
 
 # Usage
 Once the application is up and running, you can access the various CRUD operations through the user interface. Here's a brief guide on how to use the system:
