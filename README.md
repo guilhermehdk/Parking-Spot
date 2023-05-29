@@ -1,3 +1,5 @@
+![wallpaper](https://github.com/guilhermehdk/assets/blob/main/parking-spot/wallpaper.jpeg)
+
 # Project Name: Parking Management System
 This README provides an overview of the Parking Management System, a CRUD (Create, Read, Update, Delete) application developed in Java using the Spring Boot framework, Hibernate, JPA (Java Persistence API), and MySQL. The system aims to facilitate the management of parking spaces in an apartment building.
 
@@ -158,7 +160,7 @@ Once the application is up and running, you can access the various CRUD operatio
 
 ![6-Delete](https://github.com/guilhermehdk/assets/blob/main/parking-spot/6-Delete.png)
 
-# Validators
+# Business Rules 
 Before creating or updating a parking spot, some validations are performed:
 
 1. If attempting to create or update a parking spot with an existing license plate, the following message will be returned:
@@ -172,6 +174,30 @@ Before creating or updating a parking spot, some validations are performed:
 3. If attempting to create or update a parking spot with an existing apartment and block, the following message will be returned:
 
        "Conflict: Parking Spot already registered for this apartment/block!"
+
+# Exceptions
+Exceptions are handled with RestControllerAdvice and ExceptionHandler
+
+1. Non-compliance with business rules
+    - HTTP response status code: **400 (Bad Request)**
+
+2. JSON with null or invalid fields
+    - HTTP response status code: **400 (Bad Request)**
+
+3. JSON with incorrect formatting
+    - HTTP response status code: **400 (Bad Request)**
+
+4. JSON with duplicate data in the database
+    - HTTP response status code: **400 (Bad Request)**
+
+5. Record not found in the database
+    - HTTP response status code: **404 (Not Found)**
+
+
+# Contributing
+
+Contributions to the Parking Management System project are welcome. If you have any ideas, suggestions, or bug reports, please submit them via GitHub issues. You can also fork the repository, make the desired changes, and submit a pull request.
+
 
 # Author
 
