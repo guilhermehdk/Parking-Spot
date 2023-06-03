@@ -3,18 +3,51 @@
 # Project Name: Parking Management System
 This README provides an overview of the Parking Management System, a CRUD (Create, Read, Update, Delete) application developed in Java using the Spring Boot framework, Hibernate, JPA (Java Persistence API), and MySQL. The system aims to facilitate the management of parking spaces in an apartment building.
 
-# Features
-- Create: Users can add new parking spaces to the system, specifying relevant information such as the apartment number, owner's name, and vehicle details.
-- Read: The system allows users to view a list of all parking spaces in the apartment building, including details such as the owner's name, apartment number, and vehicle information.
-- Update: Users have the ability to update the information associated with a parking space, such as the owner's name, vehicle details, or availability status.
-- Delete: Users can delete a parking space from the system if it is no longer required or becomes unavailable.
-
 # Technologies Used
 - Java: The core programming language used for developing the application logic.
 - Spring Boot: A Java framework that simplifies the development of standalone, production-grade Spring-based applications.
 - Hibernate: An Object-Relational Mapping (ORM) framework that provides a mapping between Java objects and a relational database (MySQL in this case).
 - JPA: Java Persistence API is a specification that allows developers to manage relational data in Java applications.
 - MySQL: A widely used open-source relational database management system.
+
+# Features
+
+- CRUD: Set of basic operations to manipulate data.
+
+     - Create: Users can add new parking spaces to the system, specifying relevant information such as the apartment number, owner's name, and vehicle details.
+     - Read: The system allows users to view a list of all parking spaces in the apartment building, including details such as the owner's name, apartment number, and vehicle information.
+     - Update: Users have the ability to update the information associated with a parking space, such as the owner's name, vehicle details, or availability status.
+     - Delete: Users can delete a parking space from the system if it is no longer required or becomes unavailable.
+
+
+- DTOs: Used to encapsulate data and transfer it between different layers or components of the application, providing a structured and decoupled approach. Using DTOs for request and response objects helps in decoupling your business logic from the specific details of incoming and outgoing data structures. It improves maintainability and allows for easy modifications without affecting other parts of the system.
+
+     - DTOs for requests: This DTO class have properties that match the fields of the request payload. It helps in validating and handling the incoming data effectively.
+     - DTOs for responses: This class can have properties that correspond to the desired fields in the response payload. By using response DTOs, you can control the structure and format of the data that your application sends to clients.
+
+
+- Business Rules: Before creating or updating a parking spot, some validations are performed.
+
+     - If attempting to create or update a parking spot with an existing license plate, the following message will be returned:
+
+            "Conflict: Licence Plate Car is already in use!"
+
+     - If attempting to create or update a parking spot with an existing parking spot, the following message will be returned: 
+
+             "Conflict: Parking Spot is already in use!"
+
+     - If attempting to create or update a parking spot with an existing apartment and block, the following message will be returned:
+
+             "Conflict: Parking Spot already registered for this apartment/block!"
+
+- Exceptions: Exceptions are handled with RestControllerAdvice and ExceptionHandler
+
+     - Non-compliance with business rules: HTTP response status code **400 (Bad Request)**
+     - JSON with null or invalid fields: HTTP response status code **400 (Bad Request)**
+     - JSON with incorrect formatting: HTTP response status code **400 (Bad Request)**
+     - JSON with duplicate data in the database: HTTP response status code **400 (Bad Request)**
+     - Record not found in the database: HTTP response status code **404 (Not Found)**
+
 
 # Getting Started
 To run the Parking Management System locally on your machine, follow these steps:
@@ -159,39 +192,6 @@ Once the application is up and running, you can access the various CRUD operatio
     - HTTP response status code: **204 (NO CONTENT)**
 
 ![6-Delete](https://github.com/guilhermehdk/assets/blob/main/parking-spot/6-Delete.png)
-
-# Business Rules 
-Before creating or updating a parking spot, some validations are performed:
-
-1. If attempting to create or update a parking spot with an existing license plate, the following message will be returned:
-
-       "Conflict: Licence Plate Car is already in use!"
-
-2. If attempting to create or update a parking spot with an existing parking spot, the following message will be returned: 
-
-       "Conflict: Parking Spot is already in use!"
-
-3. If attempting to create or update a parking spot with an existing apartment and block, the following message will be returned:
-
-       "Conflict: Parking Spot already registered for this apartment/block!"
-
-# Exceptions
-Exceptions are handled with RestControllerAdvice and ExceptionHandler
-
-1. Non-compliance with business rules
-    - HTTP response status code: **400 (Bad Request)**
-
-2. JSON with null or invalid fields
-    - HTTP response status code: **400 (Bad Request)**
-
-3. JSON with incorrect formatting
-    - HTTP response status code: **400 (Bad Request)**
-
-4. JSON with duplicate data in the database
-    - HTTP response status code: **400 (Bad Request)**
-
-5. Record not found in the database
-    - HTTP response status code: **404 (Not Found)**
 
 
 # Contributing
